@@ -1,0 +1,555 @@
+```{r}
+
+library(ggplot2)
+library(readr)  
+library(dplyr)  
+
+data = read_csv("Data_Provider1.csv")
+
+# change the axis so B is y-axis and A is x-axis
+data$Block = factor(data$QuadNumber, levels = rev(paste0("B", 1:8)))  
+data$Aisle = factor(data$AisleNumber, levels = paste0("A", 1:8))  
+
+
+# RSSI
+data$RSSI_Category = cut(data$RSSI, 
+                          breaks = c(-Inf, -105, -96, -86, Inf), 
+                          labels = c("Poor", "Fair", "Fair", "Good"), 
+                          right = FALSE)
+
+source("myICtheme.R")
+
+heatmap_plot = ggplot(data, aes(x = Aisle, y = Block, fill = RSSI_Category)) +
+  geom_tile(color = "black", size = 0.5) +  # black borders for each quad
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "yellow", "Poor" = "red")) +
+  geom_hline(yintercept = 0.5:8.5, color = "black", size = 0.8) +  # horizontal grid lines
+  geom_vline(xintercept = 0.5:8.5, color = "black", size = 0.8) +  # vertical grid lines
+  labs(title = "Provider 1 RSSI Classification",
+       x = "Aisle",
+       y = "Block",
+       fill = "RSSI Category") +
+  coord_fixed() + 
+  my_sd322_theme()
+
+print(heatmap_plot)
+  
+ggsave(filename = "Prover1_RSSI.png", plot = heatmap_plot, width = 8, height = 6, dpi = 300)
+```
+
+```{r}
+
+library(ggplot2)
+library(readr)
+library(dplyr)  
+
+data = read_csv("Data_Provider1.csv")
+
+# change the axis so B is y-axis and A is x-axis
+data$Block = factor(data$QuadNumber, levels = rev(paste0("B", 1:8)))  
+data$Aisle = factor(data$AisleNumber, levels = paste0("A", 1:8)) 
+
+# Categorize TCPUploadSpeed
+data$TCPUploadSpeed_Category = cut(data$TCPUploadSpeed, 
+                          breaks = c(-Inf, 2, 7, 15, 30, Inf), 
+                          labels = c("Poor", "Fair", "Fair", "Fair","Good"), 
+                          right = FALSE)
+
+source("myICtheme.R")
+
+heatmap_plot = ggplot(data, aes(x = Aisle, y = Block, fill = TCPUploadSpeed_Category)) +
+  geom_tile(color = "black", size = 0.5) +  # black borders for each quad
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "yellow", "Poor" = "red")) +  
+  geom_hline(yintercept = 0.5:8.5, color = "black", size = 0.8) +  # horizontal grid lines
+  geom_vline(xintercept = 0.5:8.5, color = "black", size = 0.8) +  # vertical grid lines
+  labs(title = "Provider 1 TCP Upload Speed",
+       x = "Aisle",
+       y = "Block",
+       fill = "TCP Upload Speed Category") +
+  coord_fixed() + 
+  my_sd322_theme()
+
+print(heatmap_plot)
+  
+ggsave(filename = "Prover1_TCPUploadSpeed.png", plot = heatmap_plot, width = 8, height = 6, dpi = 300)
+```
+
+
+```{r}
+library(ggplot2)
+library(readr)
+library(dplyr)  
+
+data = read_csv("Data_Provider1.csv")
+
+# change the axis so B is y-axis and A is x-axis
+data$Block = factor(data$QuadNumber, levels = rev(paste0("B", 1:8)))  
+data$Aisle = factor(data$AisleNumber, levels = paste0("A", 1:8)) 
+
+# Categorize TCPUploadQoS
+data$TCPUploadQoS_Category = cut(data$TCPUploadQoS, 
+                          breaks = c(-Inf, 30, 50, 70, Inf), 
+                          labels = c("Poor", "Fair", "Fair","Good"), 
+                          right = FALSE)
+
+source("myICtheme.R")
+
+heatmap_plot = ggplot(data, aes(x = Aisle, y = Block, fill = TCPUploadQoS_Category)) +
+  geom_tile(color = "black", size = 0.5) +  # black borders for each quad
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "yellow", "Poor" = "red")) +
+  geom_hline(yintercept = 0.5:8.5, color = "black", size = 0.8) +  # horizontal grid lines
+  geom_vline(xintercept = 0.5:8.5, color = "black", size = 0.8) +  # vertical grid lines
+  labs(title = "Provider 1 TCP Upload Quality of Service",
+       x = "Aisle",
+       y = "Block",
+       fill = "TCP Upload QoS Category") +
+  coord_fixed() + 
+  my_sd322_theme()
+
+print(heatmap_plot)
+  
+ggsave(filename = "Prover1_TCPUploadQoS.png", plot = heatmap_plot, width = 8, height = 6, dpi = 300)
+```
+
+```{r}
+library(ggplot2)
+library(readr)  
+library(dplyr)  
+
+data = read_csv("Data_Provider1.csv")
+
+# change the axis so B is y-axis and A is x-axis
+data$Block = factor(data$QuadNumber, levels = rev(paste0("B", 1:8)))  
+data$Aisle = factor(data$AisleNumber, levels = paste0("A", 1:8))  
+
+# Categorize TCPRoundTripTime
+data$TCPRoundTripTime_Category = cut(data$TCPRoundTripTime, 
+                          breaks = c(-Inf, 50, 100, 200, Inf), 
+                          labels = c("Good", "Fair", "Fair","Poor"), 
+                          right = FALSE)
+
+source("myICtheme.R")
+
+heatmap_plot = ggplot(data, aes(x = Aisle, y = Block, fill = TCPRoundTripTime_Category)) +
+  geom_tile(color = "black", size = 0.5) +  #  black borders for each quad
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "yellow", "Poor" = "red")) + 
+  geom_hline(yintercept = 0.5:8.5, color = "black", size = 0.8) +  # horizontal grid lines
+  geom_vline(xintercept = 0.5:8.5, color = "black", size = 0.8) +  # vertical grid lines
+  labs(title = "Provider 1 TCP Round Trip Time",
+       x = "Aisle",
+       y = "Block",
+       fill = "TCP Round Trip Time Category") +
+  coord_fixed() + 
+  my_sd322_theme()
+
+print(heatmap_plot)
+  
+ggsave(filename = "Prover1_TCPTCPRoundTripTime.png", plot = heatmap_plot, width = 8, height = 6, dpi = 300)
+```
+
+```{r}
+
+library(ggplot2)
+library(readr)  
+library(dplyr)  
+
+
+data = read_csv("Data_Provider2.csv")
+
+# change the axis so B is y-axis and A is x-axis
+data$Block = factor(data$QuadNumber, levels = rev(paste0("B", 1:8)))  
+data$Aisle = factor(data$AisleNumber, levels = paste0("A", 1:8))  
+
+# Categorize RSSI
+data$RSSI_Category = cut(data$RSSI, 
+                          breaks = c(-Inf, -105, -96, -86, Inf), 
+                          labels = c("Poor", "Fair", "Fair", "Good"), 
+                          right = FALSE)
+
+source("myICtheme.R")
+
+heatmap_plot = ggplot(data, aes(x = Aisle, y = Block, fill = RSSI_Category)) +
+  geom_tile(color = "black", size = 0.5) +  #  black borders for each quad
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "yellow", "Poor" = "red")) +  
+  geom_hline(yintercept = 0.5:8.5, color = "black", size = 0.8) +  # horizontal grid lines
+  geom_vline(xintercept = 0.5:8.5, color = "black", size = 0.8) +  # vertical grid lines
+  labs(title = "Provider 2 RSSI Classification",
+       x = "Aisle",
+       y = "Block",
+       fill = "RSSI Category") +
+  coord_fixed() + 
+  my_sd322_theme()
+
+print(heatmap_plot)
+  
+ggsave(filename = "Prover2_RSSI.png", plot = heatmap_plot, width = 8, height = 6, dpi = 300)
+```
+
+
+```{r}
+
+library(ggplot2)
+library(readr)  
+library(dplyr)  
+
+
+data = read_csv("Data_Provider2.csv")
+
+# change the axis so B is y-axis and A is x-axis
+data$Block = factor(data$QuadNumber, levels = rev(paste0("B", 1:8)))  
+data$Aisle = factor(data$AisleNumber, levels = paste0("A", 1:8))  
+
+# Categorize TCPUploadSpeed
+data$TCPUploadSpeed_Category = cut(data$TCPUploadSpeed, 
+                          breaks = c(-Inf, 2, 7, 15, 30, Inf), 
+                          labels = c("Poor", "Fair", "Fair", "Fair","Good"), 
+                          right = FALSE)
+
+source("myICtheme.R")
+
+heatmap_plot = ggplot(data, aes(x = Aisle, y = Block, fill = TCPUploadSpeed_Category)) +
+  geom_tile(color = "black", size = 0.5) +  #  black borders for each quad
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "yellow", "Poor" = "red")) +  
+  geom_hline(yintercept = 0.5:8.5, color = "black", size = 0.8) +  # horizontal grid lines
+  geom_vline(xintercept = 0.5:8.5, color = "black", size = 0.8) +  # vertical grid lines
+  labs(title = "Provider 2 TCP Upload Speed",
+       x = "Aisle",
+       y = "Block",
+       fill = "TCP Upload Speed Category") +
+  coord_fixed() + 
+  my_sd322_theme()
+
+print(heatmap_plot)
+  
+ggsave(filename = "Prover2_TCPUploadSpeed.png", plot = heatmap_plot, width = 8, height = 6, dpi = 300)
+```
+
+```{r}
+
+library(ggplot2)
+library(readr)  
+library(dplyr)  
+
+
+data = read_csv("Data_Provider2.csv")
+
+# Ensure correct factor levels for ordering
+data$Block = factor(data$QuadNumber, levels = rev(paste0("B", 1:8)))  
+data$Aisle = factor(data$AisleNumber, levels = paste0("A", 1:8))  
+
+# Categorize TCPUploadQoS
+data$TCPUploadQoS_Category = cut(data$TCPUploadQoS, 
+                          breaks = c(-Inf, 30, 50, 70, Inf), 
+                          labels = c("Poor", "Fair", "Fair","Good"), 
+                          right = FALSE)
+
+source("myICtheme.R")
+
+heatmap_plot = ggplot(data, aes(x = Aisle, y = Block, fill = TCPUploadQoS_Category)) +
+  geom_tile(color = "black", size = 0.5) +  #  black borders for each quad
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "yellow", "Poor" = "red")) +  
+  geom_hline(yintercept = 0.5:8.5, color = "black", size = 0.8) +  # horizontal grid lines
+  geom_vline(xintercept = 0.5:8.5, color = "black", size = 0.8) +  # vertical grid lines
+  labs(title = "Provider 2 TCP Upload Quality of Service",
+       x = "Aisle",
+       y = "Block",
+       fill = "TCP Upload QoS Category") +
+  coord_fixed() + 
+  my_sd322_theme()
+
+print(heatmap_plot)
+  
+ggsave(filename = "Prover2_TCPUploadQoS.png", plot = heatmap_plot, width = 8, height = 6, dpi = 300)
+```
+
+
+```{r}
+
+library(ggplot2)
+library(readr)  
+library(dplyr) 
+
+
+data = read_csv("Data_Provider2.csv")
+
+# change the axis so B is y-axis and A is x-axis
+data$Block = factor(data$QuadNumber, levels = rev(paste0("B", 1:8)))  
+data$Aisle = factor(data$AisleNumber, levels = paste0("A", 1:8))  
+
+# Categorize TCPRoundTripTime
+data$TCPRoundTripTime_Category = cut(data$TCPRoundTripTime, 
+                          breaks = c(-Inf, 50, 100, 200, Inf), 
+                          labels = c("Good", "Fair", "Fair","Poor"), 
+                          right = FALSE)
+
+source("myICtheme.R")
+
+heatmap_plot = ggplot(data, aes(x = Aisle, y = Block, fill = TCPRoundTripTime_Category)) +
+  geom_tile(color = "black", size = 0.5) +  #  black borders for each quad
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "yellow", "Poor" = "red")) +  
+  geom_hline(yintercept = 0.5:8.5, color = "black", size = 0.8) +  # horizontal grid lines
+  geom_vline(xintercept = 0.5:8.5, color = "black", size = 0.8) +  # vertical grid lines
+  labs(title = "Provider 2 TCP Round Trip Time",
+       x = "Aisle",
+       y = "Block",
+       fill = "TCP Round Trip Time Category") +
+  coord_fixed() + 
+  my_sd322_theme()
+
+print(heatmap_plot)
+  
+ggsave(filename = "Prover2_TCPTCPRoundTripTime.png", plot = heatmap_plot, width = 8, height = 6, dpi = 300)
+```
+
+```{r}
+
+library(ggplot2)
+library(readr) 
+library(dplyr) 
+
+
+data = read_csv("Data_Provider3.csv")
+
+# change the axis so B is y-axis and A is x-axis
+data$Block = factor(data$QuadNumber, levels = rev(paste0("B", 1:8)))  
+data$Aisle = factor(data$AisleNumber, levels = paste0("A", 1:8))  
+
+# Categorize RSSI
+data$RSSI_Category = cut(data$RSSI, 
+                          breaks = c(-Inf, -105, -96, -86, Inf), 
+                          labels = c("Poor", "Fair", "Fair", "Good"), 
+                          right = FALSE)
+
+source("myICtheme.R")
+
+heatmap_plot = ggplot(data, aes(x = Aisle, y = Block, fill = RSSI_Category)) +
+  geom_tile(color = "black", size = 0.5) +  #  black borders for each quad
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "yellow", "Poor" = "red")) + 
+  geom_hline(yintercept = 0.5:8.5, color = "black", size = 0.8) +  # horizontal grid lines
+  geom_vline(xintercept = 0.5:8.5, color = "black", size = 0.8) +  # vertical grid lines
+  labs(title = "Provider 3 RSSI Classification",
+       x = "Aisle",
+       y = "Block",
+       fill = "RSSI Category") +
+  coord_fixed() + 
+  my_sd322_theme()
+
+print(heatmap_plot)
+  
+ggsave(filename = "Prover3_RSSI.png", plot = heatmap_plot, width = 8, height = 6, dpi = 300)
+```
+
+```{r}
+
+library(ggplot2)
+library(readr) 
+library(dplyr) 
+
+data = read_csv("Data_Provider3.csv")
+
+# change the axis so B is y-axis and A is x-axis
+data$Block = factor(data$QuadNumber, levels = rev(paste0("B", 1:8)))  
+data$Aisle = factor(data$AisleNumber, levels = paste0("A", 1:8))  
+
+# Categorize TCPUploadSpeed
+data$TCPUploadSpeed_Category = cut(data$TCPUploadSpeed, 
+                          breaks = c(-Inf, 2, 7, 15, 30, Inf), 
+                          labels = c("Poor", "Fair", "Fair", "Fair","Good"), 
+                          right = FALSE)
+
+source("myICtheme.R")
+
+heatmap_plot = ggplot(data, aes(x = Aisle, y = Block, fill = TCPUploadSpeed_Category)) +
+  geom_tile(color = "black", size = 0.5) +  #  black borders for each quad
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "yellow", "Poor" = "red")) + 
+  geom_hline(yintercept = 0.5:8.5, color = "black", size = 0.8) +  # horizontal grid lines
+  geom_vline(xintercept = 0.5:8.5, color = "black", size = 0.8) +  # vertical grid lines
+  labs(title = "Provider 3 TCP Upload Speed",
+       x = "Aisle",
+       y = "Block",
+       fill = "TCP Upload Speed Category") +
+  coord_fixed() + 
+  my_sd322_theme()
+
+print(heatmap_plot)
+  
+ggsave(filename = "Prover3_TCPUploadSpeed.png", plot = heatmap_plot, width = 8, height = 6, dpi = 300)
+```
+
+```{r}
+library(ggplot2)
+library(readr)  
+library(dplyr)  
+
+
+data = read_csv("Data_Provider3.csv")
+
+# change the axis so B is y-axis and A is x-axis
+data$Block = factor(data$QuadNumber, levels = rev(paste0("B", 1:8))) 
+data$Aisle = factor(data$AisleNumber, levels = paste0("A", 1:8)) 
+
+# Categorize TCPUploadQoS
+data$TCPUploadQoS_Category = cut(data$TCPUploadQoS, 
+                          breaks = c(-Inf, 30, 50, 70, Inf), 
+                          labels = c("Poor", "Fair", "Fair","Good"), 
+                          right = FALSE)
+
+source("myICtheme.R")
+
+heatmap_plot = ggplot(data, aes(x = Aisle, y = Block, fill = TCPUploadQoS_Category)) +
+  geom_tile(color = "black", size = 0.5) +  #  black borders for each quad
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "yellow", "Poor" = "red")) +  
+  geom_hline(yintercept = 0.5:8.5, color = "black", size = 0.8) +  # horizontal grid lines
+  geom_vline(xintercept = 0.5:8.5, color = "black", size = 0.8) +  # vertical grid lines
+  labs(title = "Provider 3 TCP Upload Quality of Service",
+       x = "Aisle",
+       y = "Block",
+       fill = "TCP Upload QoS Category") +
+  coord_fixed() + 
+  my_sd322_theme()
+
+print(heatmap_plot)
+  
+ggsave(filename = "Prover3_TCPUploadQoS.png", plot = heatmap_plot, width = 8, height = 6, dpi = 300)
+```
+
+
+```{r}
+
+library(ggplot2)
+library(readr)  
+library(dplyr)  
+
+data = read_csv("Data_Provider3.csv")
+
+# change the axis so B is y-axis and A is x-axis
+data$Block = factor(data$QuadNumber, levels = rev(paste0("B", 1:8)))  
+data$Aisle = factor(data$AisleNumber, levels = paste0("A", 1:8))  
+
+# Categorize TCPRoundTripTime
+data$TCPRoundTripTime_Category = cut(data$TCPRoundTripTime, 
+                          breaks = c(-Inf, 50, 100, 200, Inf), 
+                          labels = c("Good", "Fair", "Fair","Poor"), 
+                          right = FALSE)
+
+source("myICtheme.R")
+
+heatmap_plot = ggplot(data, aes(x = Aisle, y = Block, fill = TCPRoundTripTime_Category)) +
+  geom_tile(color = "black", size = 0.5) +  #  black borders for each quad
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "yellow", "Poor" = "red")) +  
+  geom_hline(yintercept = 0.5:8.5, color = "black", size = 0.8) +  # horizontal grid lines
+  geom_vline(xintercept = 0.5:8.5, color = "black", size = 0.8) +  # vertical grid lines
+  labs(title = "Provider 3 TCP Round Trip Time",
+       x = "Aisle",
+       y = "Block",
+       fill = "TCP Round Trip Time Category") +
+  coord_fixed() + 
+  my_sd322_theme()
+
+print(heatmap_plot)
+  
+ggsave(filename = "Prover3_TCPTCPRoundTripTime.png", plot = heatmap_plot, width = 8, height = 6, dpi = 300)
+```
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+# read all datasets
+prov1 = read.csv("Data_Provider1.csv")
+prov2 = read.csv("Data_Provider2.csv")
+prov3 = read.csv("Data_Provider3.csv")
+
+# avg for each provider
+avg_prov1 <- prov1 %>%
+  summarise(
+    RSSI = mean(RSSI, na.rm = TRUE),
+    TCPUploadSpeed = mean(TCPUploadSpeed, na.rm = TRUE),
+    TCPUploadQoS = mean(TCPUploadQoS, na.rm = TRUE),
+    TCPRoundTripTime = mean(TCPRoundTripTime, na.rm = TRUE)
+  ) %>%
+  mutate(Provider = "Provider 1")
+
+avg_prov2 <- prov2 %>%
+  summarise(
+    RSSI = mean(RSSI, na.rm = TRUE),
+    TCPUploadSpeed = mean(TCPUploadSpeed, na.rm = TRUE),
+    TCPUploadQoS = mean(TCPUploadQoS, na.rm = TRUE),
+    TCPRoundTripTime = mean(TCPRoundTripTime, na.rm = TRUE)
+  ) %>%
+  mutate(Provider = "Provider 2")
+
+avg_prov3 <- prov3 %>%
+  summarise(
+    RSSI = mean(RSSI, na.rm = TRUE),
+    TCPUploadSpeed = mean(TCPUploadSpeed, na.rm = TRUE),
+    TCPUploadQoS = mean(TCPUploadQoS, na.rm = TRUE),
+    TCPRoundTripTime = mean(TCPRoundTripTime, na.rm = TRUE)
+  ) %>%
+  mutate(Provider = "Provider 3")
+
+# combine data into one table (avg_data)
+avg_data <- bind_rows(avg_prov1, avg_prov2, avg_prov3)
+
+# change Provider to factor for proper ordering
+avg_data$Provider <- factor(avg_data$Provider, levels = c("Provider 1", "Provider 2", "Provider 3"))
+
+# my custom  theme
+source("myICtheme.R")
+
+
+
+# RSSI Bar Graph
+RSSI_Graph = ggplot(avg_data, aes(x = Provider, y = RSSI, fill = Provider)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = round(RSSI, 2)), vjust = -0.5, size = 15) +  # exact value inside bars
+  labs(title = "Average RSSI by Provider ", 
+       subtitle = "Negative Numbers - Lower RSSI values indicate weaker signal strength",
+       y = "Average RSSI", x = "Provider") +
+  my_sd322_theme()
+
+ggsave(filename = "Average_RSSI.png", plot = RSSI_Graph, width = 8, height = 6, dpi = 300)
+
+
+
+
+# TCPUploadSpeed Bar Graph
+TCPUploadSpeed_Graph = ggplot(avg_data, aes(x = Provider, y = TCPUploadSpeed, fill = Provider)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = round(TCPUploadSpeed, 2)), vjust = -0.5, size = 15) +
+  labs(title = "Average TCP Upload Speed by Provider", y = "Avg Upload Speed (Mbps)", x = "Provider") +
+  my_sd322_theme()
+
+ggsave(filename = "Average_TCPUploadSpeed.png", plot = TCPUploadSpeed_Graph, width = 8, height = 6, dpi = 300)
+
+
+
+
+
+# TCPUploadQoS Bar Graph
+TCPUploadQoS_Graph = ggplot(avg_data, aes(x = Provider, y = TCPUploadQoS, fill = Provider)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = round(TCPUploadQoS, 2)), vjust = -0.5, size = 15) +
+  labs(title = "Average TCP Upload QoS by Provider", y = "Avg Upload QoS (%)", x = "Provider") +
+  my_sd322_theme()
+
+ggsave(filename = "Average_TCPUploadQoS.png", plot = TCPUploadQoS_Graph, width = 8, height = 6, dpi = 300)
+
+
+
+
+# TCPRoundTripTime Bar Graph
+TCPRoundTripTime_Graph = ggplot(avg_data, aes(x = Provider, y = TCPRoundTripTime, fill = Provider)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = round(TCPRoundTripTime, 2)), vjust = -0.5, size = 15) +
+  labs(title = "Average TCP Round Trip Time by Provider", 
+       subtitle = "Lower TCP Round Trip Time indicates better Provider",
+       y = "Avg RTT (ms)", x = "Provider") +
+  my_sd322_theme()
+ggsave(filename = "Avg_TCPRoundTripTime.png", plot = TCPRoundTripTime_Graph, width = 8, height = 6, dpi = 300)
+
+
+
+```
+
+
